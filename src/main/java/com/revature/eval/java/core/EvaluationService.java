@@ -1,6 +1,11 @@
 package com.revature.eval.java.core;
 
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +18,19 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public String reverse(String string) {
+	public String reverse(String string) {    //DONE
 		// TODO Write an implementation for this method declaration
-		return null;
+		if(string == "") {
+			return "";
+		}
+		
+		String reverse=new String();
+		
+		for(int i = 0; i<string.length();i++) {
+			reverse=reverse+string.charAt(string.length()-i-1);
+		}
+		
+		return reverse;
 	}
 
 	/**
@@ -27,8 +42,27 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		 final int MAX_ACRONYM = 10;
+		
+		if(phrase == "") {
+			return "";
+		}
+		
+		
+		
+		String[] splitArr = new String[MAX_ACRONYM];
+		splitArr = phrase.split("[/s/t,]+");
+		String result = new String();
+		
+		for(int i =0; i<splitArr.length;i++) {
+			result+=Character.toUpperCase(splitArr[i].charAt(0));
+			
+		}
+		
+		return result;
+		
+		
+		
 	}
 
 	/**
@@ -81,18 +115,23 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if(getSideOne() == getSideTwo() && getSideTwo()==getSideThree()) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if(getSideOne() == getSideTwo() || getSideTwo()==getSideThree() || getSideOne() == getSideThree()) {
+				return true;
+			}
 			return false;
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
-			return false;
+			
+			
+			return !isEquilateral();
 		}
 
 	}
@@ -113,8 +152,102 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int sum = 0;
+		
+		for(int i=0; i <string.length();i++) {
+			switch(Character.toLowerCase(string.charAt(i))) {
+			case 'a':
+				sum+=1;
+				break;
+			case 'b':
+				sum+=3;
+				break;
+			case 'c':
+				sum+=3;
+				break;
+			case 'd':
+				sum+=2;
+				break;
+			case 'e':
+				sum+=1;
+				break;
+			case 'f':
+				sum+=4;
+				break;
+			case 'g':
+				sum+=2;
+				break;
+			case 'h':
+				sum+=4;
+				break;
+			case 'i':
+				sum+=1;
+				break;
+			case 'j':
+				sum+=8;
+				break;
+			case 'k':
+				sum+=5;
+				break;
+			case 'l':
+				sum+=1;
+				break;
+			case 'm':
+				sum+=3;
+				break;
+			case 'n':
+				sum+=1;
+				break;
+			case 'o':
+				sum+=1;
+				break;
+			case 'p':
+				sum+=3;
+				break;
+			case 'q':
+				sum+=10;
+				break;
+			case 'r':
+				sum+=1;
+				break;
+			case 's':
+				sum+=1;
+				break;
+			case 't':
+				sum+=1;
+				break;
+			case 'u':
+				sum+=1;
+				break;
+			case 'v':
+				sum+=4;
+				break;
+			case 'w':
+				sum+=4;
+				break;
+			case 'x':
+				sum+=8;
+				break;
+			case 'y':
+				sum+=4;
+				break;
+			case 'z':
+				sum+=10;
+				break;
+			default:
+			
+			
+			
+			
+			}
+			
+			
+			
+		}
+		return sum;
+		
+		
+		
 	}
 
 	/**
@@ -149,8 +282,28 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+		
+		
+		String[] strArr = string.split("[ ().-]+");
+		
+		String result = new String();
+		
+		for(String nums : strArr) {
+			if(nums == "1") {
+				continue;
+			}
+			if(!nums.matches("^\\d+$")) {
+				throw new IllegalArgumentException("Invalid input, numerics only");
+			}
+			result+=nums;
+		}
+		
+		if(result.length()>10 || result.length() <9) {
+			throw new IllegalArgumentException("can only take 9 or 10 digit numbers");
+		}
+		
+		return result;
 	}
 
 	/**
@@ -163,8 +316,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		if(string == null) {
+			return null;
+		}
+		
+		
+		Map<String, Integer> dict = new HashMap<String,Integer>();
+		
+		String[] words = new String[10];
+		words = string.split("[\\s,\\n]+");
+		
+		for(String word:words) {
+			if(dict.containsKey(word)) {
+				int temp = dict.get(word);
+				dict.put(word,temp+1);
+			}else {
+				dict.put(word,1);
+			}
+		}
+		return dict;
 	}
 
 	/**
@@ -205,9 +375,10 @@ public class EvaluationService {
 	static class BinarySearch<T> {
 		private List<T> sortedList;
 
-		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
-			return 0;
+		public int indexOf(T t) { 
+			
+			return Collections.binarySearch(sortedList,t,Collections.reverseOrder(Collections.reverseOrder()));
+			
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -243,8 +414,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		if(string.charAt(0) == 'a' || string.charAt(0) == 'e' || string.charAt(0) == 'i' || 
+				string.charAt(0) == 'o' || string.charAt(0) == 'u') {
+			
+			return string + "ay";
+		}else {
+			char[] myArr = string.toCharArray();
+			char temp = myArr[0];
+			String tempString = Character.toString(temp) + myArr[1];
+			for(int i = 0; i<myArr.length-2;i++) {
+				myArr[i]=myArr[i+2];
+			}
+			
+			return myArr.toString() + tempString + "ay";
+		}
+		
+		
 	}
 
 	/**
@@ -263,8 +448,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		String test = Integer.toString(input);
+		int result = 0;
+		char[] myArr = test.toCharArray();
+		
+		for(int i =0; i<myArr.length;i++) {
+			result+= Math.pow(Character.getNumericValue(myArr[i]),myArr.length);
+		}
+		return result == input;
 	}
 
 	/**
@@ -278,7 +469,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
+		
 		return null;
 	}
 
