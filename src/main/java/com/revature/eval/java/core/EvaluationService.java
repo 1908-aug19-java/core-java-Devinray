@@ -469,8 +469,33 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
+		List<Long> factors = new ArrayList<Long>();
+		List<Long> primeFactors = new ArrayList<Long>();
 		
-		return null;
+		for(long i = 0; i<l; i++) {
+			if(l%i==0) {
+				factors.add(i);
+			}
+		}
+		
+		long temp=0;
+		
+		for(long i =0; i<factors.size(); i++) {
+			for(long j =0; j<factors.get((int)i);j++) {
+				if(factors.get((int)i)%j ==0){
+					temp=j;
+					break;
+				}
+				
+			}
+			if(factors.get((int)i)%temp == 0) {
+				continue;
+			}
+			primeFactors.add(factors.get((int)i));
+		}
+		
+		
+		return primeFactors;
 	}
 
 	/**
@@ -508,10 +533,34 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			char[] myChars = string.toCharArray();
+			int ascii;
+			String result = "";
+			
+			
+			for(char c:myChars) {
+				
+				
+				ascii = (int)c;
+				if(Character.isLowerCase(ascii)) {
+					ascii-=97;
+					ascii=(ascii+key)%26;
+					ascii+=97;
+					result+=(char)ascii;
+				}else if(Character.isUpperCase(ascii)) {
+					ascii-=65;
+					ascii=(ascii+key)%26;
+					ascii+=65;
+					result+=(char)ascii;
+				}else {
+				result+=(char)ascii;
+				}
+				
+			}
+			
+			
+			return result;
 		}
-
 	}
 
 	/**
@@ -527,8 +576,25 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		if(i==1) {
+			return 2;
+		}
+		int count = 1;
+		for(int j=3;;j++) {
+			for(int k=2;;k++) {
+				if(j==k) {
+					count+=1;
+					break;
+				}
+				if(j%k==0) {
+					break;
+				}
+			}
+			if(count==i) {
+				return j;
+			}
+		}
+		
 	}
 
 	/**
