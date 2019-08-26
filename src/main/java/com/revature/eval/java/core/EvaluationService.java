@@ -758,11 +758,15 @@ public class EvaluationService {
 			
 			if(Character.isDigit(ascii)) {
 				
+				
 				sum+=(Character.getNumericValue(ascii)*(10-i));
 				i++;		
 			}else
-			if(c=='X') {
+			if(c=='X' && i==9) {
 				sum+=10;
+			}
+			else {
+				return false;
 			}
 		}
 		
