@@ -46,24 +46,13 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String acronym(String phrase) {
-		 final int MAX_ACRONYM = 10;
 		
 		if(phrase == "") {
 			return "";
 		}
 		
 		
-		
-		String[] splitArr = new String[MAX_ACRONYM];
-		splitArr = phrase.split("[/s/t,]+");
-		String result = new String();
-		
-		for(int i =0; i<splitArr.length;i++) {
-			result+=Character.toUpperCase(splitArr[i].charAt(0));
-			
-		}
-		
-		return result;
+		return phrase.replaceAll("\\B.|\\P{L}", "").toUpperCase(); //replaces each 
 		
 		
 		
@@ -476,7 +465,7 @@ public class EvaluationService {
 		List<Long> factors = new ArrayList<Long>();
 		List<Long> primeFactors = new ArrayList<Long>();
 		
-		for(long i = 2;i<=l;i++) {
+/*		for(long i = 2;i<=l;i++) {
 			if(i%l==0) {
 				factors.add(i);
 				if(i==(i/l)) {
@@ -505,7 +494,7 @@ public class EvaluationService {
 			
 			}
 		}
-		
+	*/	
 		
 		return primeFactors;
 	}
@@ -588,6 +577,10 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
+		if(i==0) {
+			throw new IllegalArgumentException();
+		}
+		
 		if(i==1) {
 			return 2;
 		}
