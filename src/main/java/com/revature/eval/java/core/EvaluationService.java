@@ -472,26 +472,34 @@ public class EvaluationService {
 		List<Long> factors = new ArrayList<Long>();
 		List<Long> primeFactors = new ArrayList<Long>();
 		
-		for(long i = 0; i<l; i++) {
-			if(l%i==0) {
+		for(long i = 2;i<=l;i++) {
+			if(i%l==0) {
 				factors.add(i);
+				if(i==(i/l)) {
+					factors.add(i);
+				}
 			}
 		}
-		
-		long temp=0;
-		
-		for(long i =0; i<factors.size(); i++) {
-			for(long j =0; j<factors.get((int)i);j++) {
-				if(factors.get((int)i)%j ==0){
-					temp=j;
+		int count = 0;
+		for(long fact:factors) {
+			for(long i=2;;i++) {
+			if(i==fact) {
+				primeFactors.add(fact);
+				count++;
+				if(count==factors.size()) {
 					break;
 				}
-				
 			}
-			if(factors.get((int)i)%temp == 0) {
+				
+			if(i%fact == 0) {
+				count++;
+				if(count == factors.size()) {
+					break;
+				}
 				continue;
 			}
-			primeFactors.add(factors.get((int)i));
+			
+			}
 		}
 		
 		
@@ -630,8 +638,46 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			char[] myChars = string.toCharArray();
+			String result = "";
+			int ascii;
+			int count=0;
+				for(char c:myChars) {
+					ascii = (int)c;
+					if(Character.isDigit(ascii)) {
+						result+=c;
+					}
+					
+					if(Character.isLowerCase(ascii)) {
+						ascii-=97;
+						ascii=26-ascii;
+						ascii+=96;
+						result+=(char)ascii;
+						
+					}else if(Character.isUpperCase(ascii)) {
+						ascii-=65;
+						ascii=26-ascii;
+						ascii+=96;
+						result+=(char)ascii;
+						
+					}else {
+						continue;
+				}
+			}
+			
+			char[] myChars2 = result.toCharArray();
+			String finalResult="";
+			for(char c:myChars2) {
+				if(count%5==0 && count!=0) {
+					finalResult+=' ';
+				}
+				finalResult+=c;
+				count++;
+			}
+			
+			
+			
+			return finalResult;
 		}
 
 		/**
