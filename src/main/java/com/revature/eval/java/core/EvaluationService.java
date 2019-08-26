@@ -1,10 +1,14 @@
 package com.revature.eval.java.core;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -789,7 +793,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
+		
+		char[] myChars = string.toCharArray();
+		HashSet mySet = new HashSet();
+		for(char c:myChars) {
+			if(Character.isSpaceChar(c)) {
+				continue;
+			}
+			if(!mySet.contains(c)) {
+			mySet.add(c);
+			}
+		}
+		
+		if(mySet.size()==26) {
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -802,8 +821,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		Temporal temp=given;
+		LocalDateTime date =LocalDateTime.from(given);
+		date.plus(1000000000,ChronoUnit.SECONDS);
+		if(!given.isSupported(ChronoUnit.SECONDS)) {
+			return given.plus(1000000000/60/60/24,ChronoUnit.DAYS);
+		}
+			
+		return given.plus(1000000000,ChronoUnit.SECONDS);
 	}
 
 	/**
@@ -820,8 +845,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		HashSet<Integer> mySet = new HashSet<Integer>();
+		for(int num:set) {
+			for(int j=1; num*j<i;j++) {
+				mySet.add(num*j);
+			}
+			
+		}
+		
+		int sum=0;
+		
+		for(int num:mySet) {
+			sum+=num;
+		}
+		
+		return sum;
 	}
 
 	/**
@@ -861,8 +899,36 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isLuhnValid(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		char[] myChars = string.toCharArray();
+		int sum =0;
+		
+		for(int i=0;i<myChars.length;i++) {
+			int ascii = (int)myChars[myChars.length-i-1];
+			
+			if(Character.isWhitespace(ascii)) {
+				continue;
+			}
+			
+			if(!Character.isDigit(ascii)) {
+				return false;
+			}
+			int num = Character.getNumericValue(ascii)*2;
+			
+			if(i%2==0){
+				if(myChars[myChars.length-1-i]*2>9) {
+					sum+= ((Character.getNumericValue(ascii)*2) -9);
+				}else {
+					sum+= Character.getNumericValue(ascii)*2;
+				}
+				
+			
+			}else {
+				sum+=Character.getNumericValue(ascii);
+			}
+		
+		
+		}
+		return 10%sum == 0;
 	}
 
 	/**
