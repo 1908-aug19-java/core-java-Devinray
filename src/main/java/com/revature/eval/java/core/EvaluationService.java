@@ -662,8 +662,8 @@ public class EvaluationService {
 						
 					}else {
 						continue;
+					}
 				}
-			}
 			
 			char[] myChars2 = result.toCharArray();
 			String finalResult="";
@@ -687,8 +687,36 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			char[] myChars = string.toCharArray();
+			String result = "";
+			int ascii;
+			
+			for(char c:myChars) {
+				ascii = (int)c;
+				if(Character.isDigit(ascii)) {
+					result+=c;
+					continue;
+				}
+				
+				if(Character.isSpaceChar(ascii)) {
+					continue;
+				}
+				
+				if(Character.isAlphabetic(ascii)) {
+					ascii-=97;
+					ascii = 26-ascii;
+					ascii+=96;
+					result+=(char)ascii;
+					continue;
+				}
+				else {
+					result+=c;
+				}
+			}
+			
+			
+			
+			return result;
 		}
 	}
 
